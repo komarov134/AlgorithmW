@@ -1,0 +1,14 @@
+let z = \f.\x.x in
+let t = \a.\b.a in
+let f = \a.\b.b in
+let f0 = \a.a t in
+let s0 = \a.a f in
+let p0 = \a.\b.\s.s a b in
+let n3 = \f.\x.f(f(f x)) in
+let n5 = \f.\x.f(f(f(f(f x)))) in
+let p1 = \n.\f.\x.n f (f x) in
+let p = \m.\n.(m (p1))n in
+let m = \m.\n.m (p n ) z in
+let m1 = \n.f0 ( n (\p.p0 (s0 p)((p1)(s0 p))) ( p0 z z)) in
+let m2 = \m.\n.m m1 n in
+m2 n3 n5

@@ -1,13 +1,20 @@
 import expression.*;
+import type.Scheme;
 import types.Types;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-public class Main {
+import org.antlr.v4.runtime.*;
+import org.antlr.v4.runtime.tree.*;
 
-    public static void main(String[] args) {
+public class Main {
+    public static void main(String[] args) throws IOException {
+
+
+
         Expression expressionSimple = new EAbs("x", new EVar("x"));
 
         Expression expression0 = new ELet("id",
@@ -66,7 +73,7 @@ public class Main {
 //        expressionList.add(expression5);
 
         for (Expression expression : expressionList) {
-            System.out.println(Types.typeInference(new HashMap<>(), expression));
+            System.out.println(Types.typeInference(new HashMap<String, Scheme>(), expression));
         }
         // write your code here
     }

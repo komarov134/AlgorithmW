@@ -1,0 +1,8 @@
+let o = \a.\b.If a T b in
+let m3 = Y (\m3.\a.\b.If (Eq a 0) 0 (Plus b (m3 (Minus a 1) b))) in
+let d2 = Y (\d3.\a.If (o (Eq a 0) (Eq a 1)) 0 (Plus 1 (d3 (Minus a 2)))) in
+let g = Y (\g.\a.\b.o (Eq a 0) (If (Eq b 0) F (g (Minus a 1) (Minus b 1)))) in
+let b0 = Y (\b0.\y.\l.\r.If (Eq l r) l (
+              let m = d2 (Plus l r) in 
+              If (g (m3 m m) y) (b0 y (Plus m 1) r) (b0 y l m))) in
+g 0 0

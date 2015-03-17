@@ -8,9 +8,15 @@ package type;
 public class Type {
     @Override
     public String toString() {
-//        if (this.getClass() == TBool.class || this.getClass() == TInt.class) {
-//            return "*";
-//        }
+        if (this.getClass() == TPair.class) {
+            return "<" + ((TPair)this).getT1() + ", " + ((TPair)this).getT2() + ">";
+        }
+        if (this.getClass() == TBool.class) {
+            return "Bool";
+        }
+        if (this.getClass() == TInt.class) {
+            return "Int";
+        }
         if (this.getClass() == TVar.class) {
             return ((TVar)this).getVar();
         }

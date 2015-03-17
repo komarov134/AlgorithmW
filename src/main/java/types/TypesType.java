@@ -26,6 +26,12 @@ public class TypesType {
             s1.addAll(s2);
             return s1;
         }
+        if (type.getClass() == TPair.class) {
+            Set<String> s1 = ftvOk(((TPair) type).getT1());
+            Set<String> s2 = ftvOk(((TPair) type).getT2());
+            s1.addAll(s2);
+            return s1;
+        }
         throw new RuntimeException("ftvOk");
     }
 

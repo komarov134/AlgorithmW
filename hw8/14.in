@@ -1,0 +1,3 @@
+let f = \n. (Y (\f.\i.\m.\n. If (Eq i 0) n (f (Minus i 1) n (Plus m n)))) n 0 1 in
+let s = \n. (Y (\s.\i.If (Eq i 0) 0 (Plus (f i) (s (Minus i 1))))) n in
+s 6

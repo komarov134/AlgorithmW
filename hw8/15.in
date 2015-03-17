@@ -1,0 +1,8 @@
+let sq = \f.\x.f (f x) in
+let r0 = \f.\x.sq sq sq sq sq sq sq sq f x in
+let r1 = \f.\x.r0 r0 r0 r0 r0 r0 r0 r0 f x in
+let r2 = \f.\x.r1 r1 r1 r1 r1 r1 r1 r1 f x in
+let r3 = \f.\x.r2 r2 r2 r2 r2 r2 r2 r2 f x in
+let r4 = \f.\x.r3 r3 r3 r3 r3 r3 r3 r3 f x in
+let r5 = \f.\x.r4 r4 r4 r4 r4 r4 r4 r4 f x in
+r5

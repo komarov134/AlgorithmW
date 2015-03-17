@@ -1,0 +1,1 @@
+let d = \m.\n.m n in (\t.d t t) (\f.\x.f (f x)) 

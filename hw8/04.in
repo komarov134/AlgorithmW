@@ -1,0 +1,5 @@
+let i = \n.\f.\x.n f (f x) in 
+let p = \m.\n.m i n in 
+let m = \m.\n.\f.m (n f) in 
+let d = \m.\n.m n in 
+d (\f.\x.f (f x)) (\f.\x.f (f x))

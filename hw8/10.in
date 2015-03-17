@@ -1,0 +1,3 @@
+let o = \a.\b.If a T b in
+let g = Y (\g.\a.\b.o (Eq a 0) (If (Eq b 0) F (g (Minus a 1) (Minus b 1)))) in
+g 0 0
