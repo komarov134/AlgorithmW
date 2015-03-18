@@ -1,1 +1,1 @@
-<0, 1>
+let a=\a.\m.\n.If (Eq m 0) (1) 1 in Y a 2 2

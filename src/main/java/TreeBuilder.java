@@ -18,6 +18,18 @@ public class TreeBuilder {
         }
         if (ctx.getClass() == HMParser.VarContext.class) {
             HMParser.VarContext varContext = (HMParser.VarContext)ctx;
+            switch (varContext.ID().toString()) {
+                case "Y":
+                    return new ETerm(ETerm.T.Y);
+                case "Eq":
+                    return new ETerm(ETerm.T.Eq);
+                case "If":
+                    return new ETerm(ETerm.T.If);
+                case "Minus":
+                    return new ETerm(ETerm.T.Minus);
+                case "Plus":
+                    return new ETerm(ETerm.T.Plus);
+            }
             return new EVar(varContext.ID().toString());
         }
         if (ctx.getClass() == HMParser.AppContext.class) {
@@ -42,26 +54,32 @@ public class TreeBuilder {
 //            HMParser.BooleanContext booleanContext = (HMParser.BooleanContext)ctx;
             return new ELit(ELit.Primitive.LBool);
         }
-        if (ctx.getClass() == HMParser.EqContext.class) {
-            HMParser.EqContext eqContext = (HMParser.EqContext)ctx;
-            return new EEq(treeBuild(eqContext.getChild(1)), treeBuild(eqContext.getChild(2)));
-        }
-        if (ctx.getClass() == HMParser.IfContext.class) {
-            HMParser.IfContext ifContext = (HMParser.IfContext)ctx;
-            return new EIf(treeBuild(ifContext.getChild(1)), treeBuild(ifContext.getChild(2)), treeBuild(ifContext.getChild(3)));
-        }
-        if (ctx.getClass() == HMParser.PlusContext.class) {
-            HMParser.PlusContext plusContext = (HMParser.PlusContext)ctx;
-            return new EPlus(treeBuild(plusContext.getChild(1)), treeBuild(plusContext.getChild(2)));
-        }
-        if (ctx.getClass() == HMParser.MinusContext.class) {
-            HMParser.MinusContext minusContext = (HMParser.MinusContext)ctx;
-            return new EMinus(treeBuild(minusContext.getChild(1)), treeBuild(minusContext.getChild(2)));
-        }
-        if (ctx.getClass() == HMParser.YContext.class) {
-            HMParser.YContext yContext = (HMParser.YContext)ctx;
-            return new EY(treeBuild(yContext.getChild(1)));
-        }
+//        if (ctx.getClass() == HMParser.EqContext.class) {
+//            return new ETerm(ETerm.T.Eq);
+//            HMParser.EqContext eqContext = (HMParser.EqContext)ctx;
+//            return new EEq(treeBuild(eqContext.getChild(1)), treeBuild(eqContext.getChild(2)));
+//        }
+//        if (ctx.getClass() == HMParser.IfContext.class) {
+//            return new ETerm(ETerm.T.If);
+//            HMParser.IfContext ifContext = (HMParser.IfContext)ctx;
+//            return new EIf(treeBuild(ifContext.getChild(1)), treeBuild(ifContext.getChild(2)), treeBuild(ifContext.getChild(3)));
+//        }
+//        if (ctx.getClass() == HMParser.PlusContext.class) {
+//            return new ETerm(ETerm.T.Plus);
+//            HMParser.PlusContext plusContext = (HMParser.PlusContext)ctx;
+//            return new EPlus(treeBuild(plusContext.getChild(1)), treeBuild(plusContext.getChild(2)));
+//        }
+//        if (ctx.getClass() == HMParser.MinusContext.class) {
+//            return new ETerm(ETerm.T.Minus);
+//            HMParser.MinusContext minusContext = (HMParser.MinusContext)ctx;
+//            return new EMinus(treeBuild(minusContext.getChild(1)), treeBuild(minusContext.getChild(2)));
+//        }
+//        if (ctx.getClass() == HMParser.YContext.class) {
+//            return new EApp(new ETerm(ETerm.T.Y), )
+//            return new ETerm(ETerm.T.Y);
+//            HMParser.YContext yContext = (HMParser.YContext)ctx;
+//            return new EY(treeBuild(yContext.getChild(1)));
+//        }
         if (ctx.getClass() == HMParser.PairContext.class) {
             HMParser.PairContext pairContext = (HMParser.PairContext)ctx;
             return new EPair(treeBuild(pairContext.getChild(1)), treeBuild(pairContext.getChild(3)));

@@ -16,25 +16,13 @@ public class HMBaseListener implements HMListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterPlus(HMParser.PlusContext ctx) { }
+	@Override public void enterApp(HMParser.AppContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitPlus(HMParser.PlusContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void enterMinus(HMParser.MinusContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void exitMinus(HMParser.MinusContext ctx) { }
+	@Override public void exitApp(HMParser.AppContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
@@ -52,18 +40,6 @@ public class HMBaseListener implements HMListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterAbs(HMParser.AbsContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void exitAbs(HMParser.AbsContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
 	@Override public void enterPair(HMParser.PairContext ctx) { }
 	/**
 	 * {@inheritDoc}
@@ -71,6 +47,18 @@ public class HMBaseListener implements HMListener {
 	 * <p>The default implementation does nothing.</p>
 	 */
 	@Override public void exitPair(HMParser.PairContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterAbs(HMParser.AbsContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitAbs(HMParser.AbsContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
@@ -88,54 +76,6 @@ public class HMBaseListener implements HMListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterEq(HMParser.EqContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void exitEq(HMParser.EqContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void enterApp(HMParser.AppContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void exitApp(HMParser.AppContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void enterY(HMParser.YContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void exitY(HMParser.YContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void enterVar(HMParser.VarContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void exitVar(HMParser.VarContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
 	@Override public void enterInteger(HMParser.IntegerContext ctx) { }
 	/**
 	 * {@inheritDoc}
@@ -148,13 +88,13 @@ public class HMBaseListener implements HMListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterIf(HMParser.IfContext ctx) { }
+	@Override public void enterVar(HMParser.VarContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitIf(HMParser.IfContext ctx) { }
+	@Override public void exitVar(HMParser.VarContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *

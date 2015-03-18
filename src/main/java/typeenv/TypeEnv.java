@@ -17,7 +17,7 @@ import java.util.Map;
 public class TypeEnv {
 
     public static Scheme generalizeOk(Map<String, Scheme> ctx, Type type) {
-        System.err.println("generalize");
+//        System.err.println("generalize");
         List<String> vars = new ArrayList<>(TypesType.ftvOk(type));
         vars.removeAll(TypesTypeEnv.ftvOk(ctx));
         return new Scheme(vars, type);

@@ -21,8 +21,10 @@ public class Type {
             return ((TVar)this).getVar();
         }
         if (this.getClass() == TFun.class) {
-            if (((TFun)this).getT1().getClass() == TVar.class) {
-                return ((TVar)((TFun)this).getT1()).getVar() + " -> " + (((TFun)this).getT2());
+            if (((TFun)this).getT1().getClass() == TVar.class
+                    || ((TFun)this).getT1().getClass() == TBool.class
+                    || ((TFun)this).getT1().getClass() == TInt.class) {
+                return ((TFun)this).getT1() + " -> " + ((TFun)this).getT2();
             }
         }
         return "(" + ((TFun)this).getT1() + ") -> " + ((TFun)this).getT2();

@@ -1,2 +1,2 @@
 let a=\a.\m.\n.If (Eq m 0) (Plus n 1) (If (Eq n 0) (a (Minus m 1) 1) (a m (a m (Minus 1 n)))) in 
-Plus ((Y a) 2 0) ((Y a) 1 1)
+Plus (Y a 2 0) (Y a 1 1)

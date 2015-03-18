@@ -29,14 +29,18 @@ public class Types {
     }
 
     public static Map<String, Type> mguOk(Type t1, Type t2) {
-        System.err.print("mgu " + t1 + " and " + t2 + " ==> ");
+//        System.err.print("mgu " + t1 + " and " + t2 + " ==> ");
 //        count++;
         if (t1.getClass() == TFun.class && t2.getClass() == TFun.class) {
             TFun tFun1 = (TFun)t1;
             TFun tFun2 = (TFun)t2;
             Map<String, Type> s1 = mguOk(tFun1.getT1(), tFun2.getT1());
+//            System.err.println("another m");
+//            System.err.println(s1);
+//            System.err.println(TypesType.applyOk(s1, tFun1.getT2()));
             Map<String, Type> s2 = mguOk(TypesType.applyOk(s1, tFun1.getT2()), TypesType.applyOk(s1, tFun2.getT2()));
-            return Subst.composeOk(s1, s2);
+//            System.err.println(Subst.composeOk(s1, s2));
+            return Subst.composeOk(s2, s1);
         }
         if (t1.getClass() == TVar.class) {
             return varBindOk(((TVar) t1).getVar(), t2);
@@ -57,7 +61,7 @@ public class Types {
     }
 
     public static Map<String, Type> varBindOk(String var, Type type) {
-        System.err.print("var bind ");
+//        System.err.print("var bind ");
         if (type.getClass() == TVar.class) {
             TVar tVar = (TVar)type;
             if (tVar.getVar().equals(var)) {
@@ -69,7 +73,7 @@ public class Types {
         }
         Map<String, Type> map = new HashMap<>();
         map.put(var, type);
-        System.err.println(map);
+//        System.err.println(map);
         return map;
     }
 
@@ -77,7 +81,7 @@ public class Types {
         Map<String, Scheme> env = new HashMap<>(envGet);
         if (expr.getClass() == EVar.class) {
             level++;
-            System.err.println(indent(level) + "expr is EVar");
+//            System.err.println(indent(level) + "expr is EVar");
             EVar eVar = (EVar) expr;
             if (env.containsKey(eVar.getVar())) {
                 Map<String, Type> s = new HashMap<>();
@@ -91,78 +95,81 @@ public class Types {
             }
         }
         if (expr.getClass() == ELit.class) {
-            System.err.println("expr is ELit");
+//            System.err.println("expr is ELit");
             return new Pair(new HashMap<String, Type>(), ELit.tiLit((ELit) expr));
         }
-        if (expr.getClass() == EEq.class) {
-            System.err.println(indent(++level) + "expr is EEq");
-
-            EEq eEq = (EEq)expr;
-
-            Pair pair1 = ti(env, eEq.getE1());
-            Map<String, Type> s1 = mguOk(pair1.getType(), new TInt());
-            Pair pair2 = ti(env, eEq.getE2());
-            Map<String, Type> s2 = mguOk(pair2.getType(), new TInt());
-            --level;
-            return new Pair(Subst.composeOk(Subst.composeOk(s1, pair1.getSubst()), Subst.composeOk(s2, pair2.getSubst())), new TBool());
+        if (expr.getClass() == ETerm.class) {
+//            System.err.println("expr is ETerm");
+            return new Pair(new HashMap<String, Type>(), ETerm.tiTerm((ETerm) expr));
         }
-        if (expr.getClass() == EIf.class) {
-            System.err.println(indent(++level) + "expr is EIf");
-            EIf eIf = (EIf)expr;
-            TVar tVar = new TVar("a");
-
-            Pair pair1 = ti(env, eIf.getE1());
-            Map<String, Type> s1 = mguOk(pair1.getType(), new TBool());
-            Map<String, Type> compose1 = Subst.composeOk(pair1.getSubst(), s1);
-            Pair pair2 = ti(env, eIf.getE2());
-            Map<String, Type> s2 = mguOk(pair2.getType(), tVar);
-            Map<String, Type> compose2 = Subst.composeOk(pair2.getSubst(), s2);
-            Pair pair3 = ti(env, eIf.getE3());
-            Map<String, Type> s3 = mguOk(pair3.getType(), tVar);
-            Map<String, Type> compose3 = Subst.composeOk(pair3.getSubst(), s3);
-
-            Map<String, Type> s4 = mguOk(pair2.getType(), pair3.getType());
-            Map<String, Type> compose4 = Subst.composeOk(compose1, compose2);
-            Map<String, Type> compose5 = Subst.composeOk(compose4, compose3);
-            --level;
-            return new Pair(Subst.composeOk(Subst.composeOk(s4, compose5), Subst.composeOk(s2, pair2.getSubst())), tVar);
-        }
-        if (expr.getClass() == EPlus.class) {
-            System.err.println(indent(++level) + "expr is EPlus");
-            EPlus ePlus = (EPlus)expr;
-
-            Pair pair1 = ti(env, ePlus.getE1());
-            Map<String, Type> s1 = mguOk(pair1.getType(), new TInt());
-            Pair pair2 = ti(env, ePlus.getE2());
-            Map<String, Type> s2 = mguOk(pair2.getType(), new TInt());
-            --level;
-            return new Pair(Subst.composeOk(Subst.composeOk(s1, pair1.getSubst()), Subst.composeOk(s2, pair2.getSubst())), new TInt());
-        }
-        if (expr.getClass() == EMinus.class) {
-            System.err.println(indent(++level) + "expr is EMinus");
-            EMinus eMinus = (EMinus)expr;
-
-            Pair pair1 = ti(env, eMinus.getE1());
-            Map<String, Type> s1 = mguOk(pair1.getType(), new TInt());
-            Pair pair2 = ti(env, eMinus.getE2());
-            Map<String, Type> s2 = mguOk(pair2.getType(), new TInt());
-            --level;
-            return new Pair(Subst.composeOk(Subst.composeOk(s1, pair1.getSubst()), Subst.composeOk(s2, pair2.getSubst())), new TInt());
-        }
-        if (expr.getClass() == EY.class) {
-            System.err.println(indent(++level) + "expr is EY");
-            EY ey = (EY)expr;
-            TVar tVar = new TVar("a");
-
-            Pair pair1 = ti(env, ey.getF());
-            Map<String, Type> s1 = mguOk(pair1.getType(), new TFun(tVar, tVar));
-            --level;
-            return new Pair(Subst.composeOk(s1, pair1.getSubst()), tVar);
-        }
+//        if (expr.getClass() == EEq.class) {
+//            System.err.println(indent(++level) + "expr is EEq");
+//
+//            EEq eEq = (EEq)expr;
+//
+//            Pair pair1 = ti(env, eEq.getE1());
+//            Map<String, Type> s1 = mguOk(pair1.getType(), new TInt());
+//            Pair pair2 = ti(env, eEq.getE2());
+//            Map<String, Type> s2 = mguOk(pair2.getType(), new TInt());
+//            --level;
+//            return new Pair(Subst.composeOk(Subst.composeOk(s1, pair1.getSubst()), Subst.composeOk(s2, pair2.getSubst())), new TBool());
+//        }
+//        if (expr.getClass() == EIf.class) {
+//            System.err.println(indent(++level) + "expr is EIf");
+//            EIf eIf = (EIf)expr;
+//            TVar tVar = new TVar("a");
+//
+//            Pair pair1 = ti(env, eIf.getE1());
+//            Map<String, Type> s1 = mguOk(pair1.getType(), new TBool());
+//            Map<String, Type> compose1 = Subst.composeOk(pair1.getSubst(), s1);
+//            Pair pair2 = ti(env, eIf.getE2());
+//            Map<String, Type> s2 = mguOk(pair2.getType(), tVar);
+//            Map<String, Type> compose2 = Subst.composeOk(pair2.getSubst(), s2);
+//            Pair pair3 = ti(env, eIf.getE3());
+//            Map<String, Type> s3 = mguOk(pair3.getType(), tVar);
+//            Map<String, Type> compose3 = Subst.composeOk(pair3.getSubst(), s3);
+//
+//            Map<String, Type> s4 = mguOk(pair2.getType(), pair3.getType());
+//            Map<String, Type> compose4 = Subst.composeOk(compose1, compose2);
+//            Map<String, Type> compose5 = Subst.composeOk(compose4, compose3);
+//            --level;
+//            return new Pair(Subst.composeOk(Subst.composeOk(s4, compose5), Subst.composeOk(s2, pair2.getSubst())), tVar);
+//        }
+//        if (expr.getClass() == EPlus.class) {
+//            System.err.println(indent(++level) + "expr is EPlus");
+//            EPlus ePlus = (EPlus)expr;
+//
+//            Pair pair1 = ti(env, ePlus.getE1());
+//            Map<String, Type> s1 = mguOk(pair1.getType(), new TInt());
+//            Pair pair2 = ti(env, ePlus.getE2());
+//            Map<String, Type> s2 = mguOk(pair2.getType(), new TInt());
+//            --level;
+//            return new Pair(Subst.composeOk(Subst.composeOk(s1, pair1.getSubst()), Subst.composeOk(s2, pair2.getSubst())), new TInt());
+//        }
+//        if (expr.getClass() == EMinus.class) {
+//            System.err.println(indent(++level) + "expr is EMinus");
+//            EMinus eMinus = (EMinus)expr;
+//
+//            Pair pair1 = ti(env, eMinus.getE1());
+//            Map<String, Type> s1 = mguOk(pair1.getType(), new TInt());
+//            Pair pair2 = ti(env, eMinus.getE2());
+//            Map<String, Type> s2 = mguOk(pair2.getType(), new TInt());
+//            --level;
+//            return new Pair(Subst.composeOk(Subst.composeOk(s1, pair1.getSubst()), Subst.composeOk(s2, pair2.getSubst())), new TInt());
+//        }
+//        if (expr.getClass() == EY.class) {
+//            System.err.println(indent(++level) + "expr is EY");
+//            EY ey = (EY)expr;
+//            TVar tVar = new TVar("a");
+//
+//            Pair pair1 = ti(env, ey.getF());
+//            Map<String, Type> s1 = mguOk(pair1.getType(), new TFun(tVar, tVar));
+//            --level;
+//            return new Pair(Subst.composeOk(s1, pair1.getSubst()), pair1.getType());
+//        }
         if (expr.getClass() == EPair.class) {
-            System.err.println(indent(++level) + "expr is EPair");
+//            System.err.println(indent(++level) + "expr is EPair");
             EPair ePair = (EPair)expr;
-
 
             Pair pair1 = ti(env, ePair.getE1());
 //            Map<String, Type> s1 = mguOk(pair1.getType(), new TInt());
@@ -173,7 +180,7 @@ public class Types {
         }
         if (expr.getClass() == EAbs.class) {
             level++;
-            System.err.println(indent(level) + "expr is EAbs");
+//            System.err.println(indent(level) + "expr is EAbs");
             EAbs eAbs = (EAbs) expr;
             TVar tv = new TVar("a");
             env.put(eAbs.getVar(), new Scheme(new ArrayList<String>(), tv));
@@ -183,10 +190,11 @@ public class Types {
         }
         if (expr.getClass() == EApp.class) {
             level++;
-            System.err.println(indent(level) + "expr is EApp");
+//            System.err.println(indent(level) + "expr is EApp");
             EApp eApp = (EApp) expr;
             TVar tv = new TVar("a");
             Pair pair1 = ti(env, eApp.getE1());
+//            System.err.println("middle");
             Pair pair2 = ti(TypesTypeEnv.applyOk(pair1.getSubst(), env), eApp.getE2());
             Map<String, Type> s3 = mguOk(TypesType.applyOk(pair2.getSubst(), pair1.getType()), new TFun(pair2.getType(), tv));
             level--;
@@ -194,7 +202,7 @@ public class Types {
         }
         if (expr.getClass() == ELet.class) {
             level++;
-            System.err.println(indent(level) + "expr is Elet");
+//            System.err.println(indent(level) + "expr is Elet");
             ELet eLet = (ELet) expr;
             Pair pair1 = ti(env, eLet.getDefExpr());
             Map<String, Scheme> env1 = new HashMap<>(env);

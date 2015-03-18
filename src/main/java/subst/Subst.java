@@ -24,6 +24,7 @@ public class Subst {
     }
 
     public static Map<String, Type> composeOk(Map<String, Type> s1, Map<String, Type> s2) {
+//        System.err.println("compose " + s1 + "  " + s2);
         Map<String, Type> map = new HashMap<>();
         for (String key : s2.keySet()) {
             map.put(key, TypesType.applyOk(s1, s2.get(key)));

@@ -7,11 +7,6 @@ expr : '(' expr ')' # Parenthesis
      | '\\' ID '.' expr    # Abs
      | INT    # Integer
      | BOOL    # Boolean
-     | 'If' expr expr expr    # If
-     | 'Minus' expr expr # Minus
-     | 'Plus' expr expr # Plus
-     | 'Eq' expr expr # Eq
-     | 'Y' expr # Y
      | '<' expr ',' expr '>' # Pair
      ;
 INT : DIGIT+;
